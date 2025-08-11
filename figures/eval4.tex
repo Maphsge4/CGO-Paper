@@ -1,0 +1,130 @@
+% This file was created with tikzplotlib v0.10.1.
+\begin{tikzpicture}
+
+\definecolor{darkgray176}{RGB}{176,176,176}
+\definecolor{darkorange25512714}{RGB}{255,127,14}
+\definecolor{forestgreen4416044}{RGB}{44,160,44}
+\definecolor{lightgray204}{RGB}{204,204,204}
+\definecolor{steelblue31119180}{RGB}{31,119,180}
+
+\begin{groupplot}[group style={group size=2 by 1}]
+\nextgroupplot[
+legend cell align={left},
+legend style={
+  fill opacity=0.8,
+  draw opacity=1,
+  text opacity=1,
+  at={(0.91,0.5)},
+  anchor=east,
+  draw=lightgray204
+},
+tick align=outside,
+tick pos=left,
+title={Qwen2 Model},
+x grid style={darkgray176},
+xlabel={Interval},
+xmajorgrids,
+xmin=1.7, xmax=8.3,
+xtick style={color=black},
+y grid style={darkgray176},
+ylabel={Max Length},
+ymajorgrids,
+ymin=7835.44, ymax=25817.36,
+ytick style={color=black}
+]
+\addplot [semithick, steelblue31119180, mark=*, mark size=3, mark options={solid}]
+table {%
+2 20080
+3 15440
+4 13904
+5 12352
+6 11584
+7 10816
+8 10816
+};
+\addlegendentry{Original}
+\addplot [semithick, darkorange25512714, mark=triangle*, mark size=3, mark options={solid}]
+table {%
+2 16064
+3 12352
+4 11123.2
+5 9881.6
+6 9267.2
+7 8652.8
+8 8652.8
+};
+\addlegendentry{FlexGen}
+\addplot [semithick, forestgreen4416044, dashed]
+table {%
+1.7 25000
+8.3 25000
+};
+\addlegendentry{DeepSpeed}
+\addplot [semithick, red, dashed]
+table {%
+1.7 9376
+8.3 9376
+};
+\addlegendentry{Naive}
+
+\nextgroupplot[
+legend cell align={left},
+legend style={
+  fill opacity=0.8,
+  draw opacity=1,
+  text opacity=1,
+  at={(0.91,0.5)},
+  anchor=east,
+  draw=lightgray204
+},
+tick align=outside,
+tick pos=left,
+title={GLM-4 Model},
+x grid style={darkgray176},
+xlabel={Interval},
+xmajorgrids,
+xmin=1.7, xmax=8.3,
+xtick style={color=black},
+y grid style={darkgray176},
+ylabel={Max Length},
+ymajorgrids,
+ymin=7835.44, ymax=25817.36,
+ytick style={color=black}
+]
+\addplot [semithick, steelblue31119180, mark=*, mark size=3, mark options={solid}]
+table {%
+2 20080
+3 15440
+4 13904
+5 12352
+6 11584
+7 10816
+8 10816
+};
+\addlegendentry{Original}
+\addplot [semithick, darkorange25512714, mark=triangle*, mark size=3, mark options={solid}]
+table {%
+2 16064
+3 12352
+4 11123.2
+5 9881.6
+6 9267.2
+7 8652.8
+8 8652.8
+};
+\addlegendentry{FlexGen}
+\addplot [semithick, forestgreen4416044, dashed]
+table {%
+1.7 25000
+8.3 25000
+};
+\addlegendentry{DeepSpeed}
+\addplot [semithick, red, dashed]
+table {%
+1.7 9376
+8.3 9376
+};
+\addlegendentry{Naive}
+\end{groupplot}
+
+\end{tikzpicture}

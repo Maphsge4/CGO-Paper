@@ -1,0 +1,275 @@
+% This file was created with tikzplotlib v0.10.1.
+\begin{tikzpicture}
+
+\definecolor{darkgray176}{RGB}{176,176,176}
+\definecolor{green}{RGB}{0,128,0}
+\definecolor{lightgray204}{RGB}{204,204,204}
+\definecolor{orange}{RGB}{255,165,0}
+
+\begin{groupplot}[group style={group size=6 by 1}]
+\nextgroupplot[
+legend cell align={left},
+legend style={fill opacity=0.8, draw opacity=1, text opacity=1, draw=lightgray204},
+tick align=outside,
+tick pos=left,
+title={(a) OPT Model on Alpaca},
+x grid style={darkgray176},
+xlabel={Batch Size},
+xmin=-0.3, xmax=6.3,
+xtick style={color=black},
+xtick={0,1,2,3,4,5,6},
+xtick={0,1,2,3,4,5,6},
+xtick={0,1,2,3,4,5,6},
+xtick={0,1,2,3,4,5,6},
+xticklabels={2,4,8,16,32,64,128},
+xticklabels={2,4,8,16,32,64,128},
+xticklabels={2,4,8,16,32,64,128},
+xticklabels={2,4,8,16,32,64,128},
+y grid style={darkgray176},
+ylabel={Latency (ms)},
+ymin=-25.51, ymax=535.71,
+ytick style={color=black}
+]
+\addplot [thick, green, mark=*, mark size=3, mark options={solid}]
+table {%
+0 89.41
+1 89.94
+2 90.66
+3 46.05
+4 23.74
+5 0
+6 0
+};
+\addlegendentry{\sys-TPOT}
+\addplot [very thick, blue, dotted, mark=x, mark size=3, mark options={solid}]
+table {%
+0 357.6
+1 179.9
+2 90.66
+3 46.05
+4 23.74
+5 0
+6 0
+};
+\addlegendentry{DeepSpeed-TPOT}
+\addplot [very thick, orange, dotted, mark=square*, mark size=3, mark options={solid}]
+table {%
+0 510.2
+1 279.3
+2 162.8
+3 104.16
+4 74.24
+5 58.68
+6 51.54
+};
+\addlegendentry{FlexGen-TPOT}
+
+\nextgroupplot[
+tick align=outside,
+tick pos=left,
+title={(b) Qwen2 Model on Alpaca},
+x grid style={darkgray176},
+xlabel={Batch Size},
+xmin=-0.3, xmax=6.3,
+xtick style={color=black},
+xtick={0,1,2,3,4,5,6},
+xtick={0,1,2,3,4,5,6},
+xtick={0,1,2,3,4,5,6},
+xticklabels={2,4,8,16,32,64,128},
+xticklabels={2,4,8,16,32,64,128},
+xticklabels={2,4,8,16,32,64,128},
+y grid style={darkgray176},
+ymin=-0.0855000000000032, ymax=646.1755,
+ytick style={color=black}
+]
+\addplot [thick, green, mark=*, mark size=3, mark options={solid}]
+table {%
+0 154.2
+1 99.13
+2 98.89
+3 95.18
+4 59.27
+5 39.31
+6 29.29
+};
+\addplot [very thick, blue, dotted, mark=x, mark size=3, mark options={solid}]
+table {%
+0 616.8
+1 326.13
+2 173.81
+3 99.007
+4 59.27
+5 39.41
+6 29.29
+};
+
+\nextgroupplot[
+tick align=outside,
+tick pos=left,
+title={(c) Qwen Model on Alpaca},
+x grid style={darkgray176},
+xlabel={Batch Size},
+xmin=-0.3, xmax=6.3,
+xtick style={color=black},
+xtick={0,1,2,3,4,5,6},
+xtick={0,1,2,3,4,5,6},
+xtick={0,1,2,3,4,5,6},
+xticklabels={2,4,8,16,32,64,128},
+xticklabels={2,4,8,16,32,64,128},
+xticklabels={2,4,8,16,32,64,128},
+y grid style={darkgray176},
+ymin=-4.4751, ymax=792.2131,
+ytick style={color=black}
+]
+\addplot [thick, green, mark=*, mark size=3, mark options={solid}]
+table {%
+0 390
+1 195
+2 97.65
+3 95.18
+4 61.48
+5 43.68
+6 31.738
+};
+\addplot [very thick, blue, dotted, mark=x, mark size=3, mark options={solid}]
+table {%
+0 756
+1 382
+2 195
+3 105.27
+4 61.48
+5 43.68
+6 31.738
+};
+
+\nextgroupplot[
+tick align=outside,
+tick pos=left,
+title={(d) OPT Model on LongBench},
+x grid style={darkgray176},
+xlabel={Batch Size},
+xmin=-0.3, xmax=6.3,
+xtick style={color=black},
+xtick={0,1,2,3,4,5,6},
+xtick={0,1,2,3,4,5,6},
+xtick={0,1,2,3,4,5,6},
+xtick={0,1,2,3,4,5,6},
+xticklabels={2,4,8,16,32,64,128},
+xticklabels={2,4,8,16,32,64,128},
+xticklabels={2,4,8,16,32,64,128},
+xticklabels={2,4,8,16,32,64,128},
+y grid style={darkgray176},
+ymin=-53.15, ymax=1116.15,
+ytick style={color=black}
+]
+\addplot [thick, green, mark=*, mark size=3, mark options={solid}]
+table {%
+0 0
+1 89.87
+2 90.47
+3 45.83
+4 23.51
+5 0
+6 0
+};
+\addplot [very thick, blue, dotted, mark=x, mark size=3, mark options={solid}]
+table {%
+0 0
+1 180
+2 90.47
+3 45.83
+4 23.51
+5 0
+6 0
+};
+\addplot [very thick, orange, dotted, mark=square*, mark size=3, mark options={solid}]
+table {%
+0 1063
+1 826
+2 502
+3 429
+4 390
+5 364
+6 340
+};
+
+\nextgroupplot[
+tick align=outside,
+tick pos=left,
+title={(e) Qwen2 Model on LongBench},
+x grid style={darkgray176},
+xlabel={Batch Size},
+xmin=-0.3, xmax=6.3,
+xtick style={color=black},
+xtick={0,1,2,3,4,5,6},
+xtick={0,1,2,3,4,5,6},
+xtick={0,1,2,3,4,5,6},
+xticklabels={2,4,8,16,32,64,128},
+xticklabels={2,4,8,16,32,64,128},
+xticklabels={2,4,8,16,32,64,128},
+y grid style={darkgray176},
+ymin=-52.023, ymax=1092.483,
+ytick style={color=black}
+]
+\addplot [thick, green, mark=*, mark size=3, mark options={solid}]
+table {%
+0 0
+1 260.114
+2 149.6
+3 94.74
+4 97.21875
+5 0
+6 0
+};
+\addplot [very thick, blue, dotted, mark=x, mark size=3, mark options={solid}]
+table {%
+0 0
+1 1040.46
+2 523.68
+3 265.3
+4 136.1
+5 0
+6 0
+};
+
+\nextgroupplot[
+tick align=outside,
+tick pos=left,
+title={(f) Yi Model on LongBench},
+x grid style={darkgray176},
+xlabel={Batch Size},
+xmin=-0.3, xmax=6.3,
+xtick style={color=black},
+xtick={0,1,2,3,4,5,6},
+xtick={0,1,2,3,4,5,6},
+xtick={0,1,2,3,4,5,6},
+xticklabels={2,4,8,16,32,64,128},
+xticklabels={2,4,8,16,32,64,128},
+xticklabels={2,4,8,16,32,64,128},
+y grid style={darkgray176},
+ymin=-52.0574, ymax=1093.2054,
+ytick style={color=black}
+]
+\addplot [thick, green, mark=*, mark size=3, mark options={solid}]
+table {%
+0 0
+1 260.2
+2 131.1805
+3 95.18
+4 98.25
+5 0
+6 0
+};
+\addplot [very thick, blue, dotted, mark=x, mark size=3, mark options={solid}]
+table {%
+0 0
+1 1041.148
+2 524.722
+3 266.509
+4 137.4
+5 0
+6 0
+};
+\end{groupplot}
+
+\end{tikzpicture}

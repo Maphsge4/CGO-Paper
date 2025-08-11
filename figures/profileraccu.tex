@@ -1,0 +1,89 @@
+% This file was created with tikzplotlib v0.10.1.
+\begin{tikzpicture}
+
+\definecolor{crimson2143940}{RGB}{214,39,40}
+\definecolor{darkgray176}{RGB}{176,176,176}
+\definecolor{forestgreen4416044}{RGB}{44,160,44}
+\definecolor{lightgray204}{RGB}{204,204,204}
+\definecolor{steelblue31119180}{RGB}{31,119,180}
+
+\begin{groupplot}[group style={group size=2 by 1}]
+\nextgroupplot[
+legend cell align={left},
+legend style={fill opacity=0.8, draw opacity=1, text opacity=1, draw=lightgray204},
+tick align=outside,
+tick pos=left,
+title={(a) TPOT Analysis},
+x grid style={darkgray176},
+xlabel={Interval Configuration},
+xmin=-0.56125, xmax=4.08625,
+xtick style={color=black},
+xtick={0,1.175,2.35,3.525},
+xticklabels={5,6,8,10},
+y grid style={darkgray176},
+ylabel={TPOT},
+ymin=0, ymax=130.1265,
+ytick style={color=black}
+]
+\draw[draw=none,fill=steelblue31119180] (axis cs:-0.35,0) rectangle (axis cs:0,123.93);
+\addlegendimage{ybar,ybar legend,draw=none,fill=steelblue31119180}
+\addlegendentry{OPT}
+
+\draw[draw=none,fill=steelblue31119180] (axis cs:0.825,0) rectangle (axis cs:1.175,115.03);
+\draw[draw=none,fill=steelblue31119180] (axis cs:2,0) rectangle (axis cs:2.35,89.388);
+\draw[draw=none,fill=steelblue31119180] (axis cs:3.175,0) rectangle (axis cs:3.525,68.17);
+\draw[draw=forestgreen4416044,fill=white,postaction={pattern=north east lines, pattern color=forestgreen4416044}] (axis cs:2.77555756156289e-17,0) rectangle (axis cs:0.35,123.93);
+\addlegendimage{ybar,ybar legend,draw=forestgreen4416044,fill=white,postaction={pattern=north east lines, pattern color=forestgreen4416044}}
+\addlegendentry{Qwen2}
+
+\draw[draw=forestgreen4416044,fill=white,postaction={pattern=north east lines, pattern color=forestgreen4416044}] (axis cs:1.175,0) rectangle (axis cs:1.525,115.03);
+\draw[draw=forestgreen4416044,fill=white,postaction={pattern=north east lines, pattern color=forestgreen4416044}] (axis cs:2.35,0) rectangle (axis cs:2.7,89.388);
+\draw[draw=forestgreen4416044,fill=white,postaction={pattern=north east lines, pattern color=forestgreen4416044}] (axis cs:3.525,0) rectangle (axis cs:3.875,68.17);
+\addplot [semithick, crimson2143940, dashed]
+table {%
+-0.56125 90
+4.08625 90
+};
+\addlegendentry{SLO}
+
+\nextgroupplot[
+legend cell align={left},
+legend style={
+  fill opacity=0.8,
+  draw opacity=1,
+  text opacity=1,
+  at={(0.03,0.97)},
+  anchor=north west,
+  draw=lightgray204
+},
+tick align=outside,
+tick pos=left,
+title={(b) Memory Usage Analysis},
+x grid style={darkgray176},
+xlabel={Configuration},
+xmin=-0.7375, xmax=7.7875,
+xtick style={color=black},
+xtick={0,1.175,2.35,3.525,4.7,5.875,7.05},
+xticklabels={2,3,4,5,6,8,10},
+y grid style={darkgray176},
+ylabel={Memory Usage (GB)},
+ymin=0, ymax=22.96875,
+ytick style={color=black}
+]
+\draw[draw=none,fill=steelblue31119180] (axis cs:-0.35,0) rectangle (axis cs:0,11.5);
+\draw[draw=none,fill=steelblue31119180] (axis cs:0.825,0) rectangle (axis cs:1.175,15.8);
+\draw[draw=none,fill=steelblue31119180] (axis cs:2,0) rectangle (axis cs:2.35,17.25);
+\draw[draw=none,fill=steelblue31119180] (axis cs:3.175,0) rectangle (axis cs:3.525,18.69);
+\draw[draw=none,fill=steelblue31119180] (axis cs:4.35,0) rectangle (axis cs:4.7,21.125);
+\draw[draw=none,fill=steelblue31119180] (axis cs:5.525,0) rectangle (axis cs:5.875,21.5);
+\draw[draw=none,fill=steelblue31119180] (axis cs:6.7,0) rectangle (axis cs:7.05,21.875);
+\draw[draw=forestgreen4416044,fill=white,postaction={pattern=north east lines, pattern color=forestgreen4416044}] (axis cs:2.77555756156289e-17,0) rectangle (axis cs:0.35,11.5);
+\draw[draw=forestgreen4416044,fill=white,postaction={pattern=north east lines, pattern color=forestgreen4416044}] (axis cs:1.175,0) rectangle (axis cs:1.525,15.8);
+\draw[draw=forestgreen4416044,fill=white,postaction={pattern=north east lines, pattern color=forestgreen4416044}] (axis cs:2.35,0) rectangle (axis cs:2.7,17.25);
+\draw[draw=forestgreen4416044,fill=white,postaction={pattern=north east lines, pattern color=forestgreen4416044}] (axis cs:3.525,0) rectangle (axis cs:3.875,18.69);
+\draw[draw=forestgreen4416044,fill=white,postaction={pattern=north east lines, pattern color=forestgreen4416044}] (axis cs:4.7,0) rectangle (axis cs:5.05,21.125);
+\draw[draw=forestgreen4416044,fill=white,postaction={pattern=north east lines, pattern color=forestgreen4416044}] (axis cs:5.875,0) rectangle (axis cs:6.225,21.5);
+\draw[draw=forestgreen4416044,fill=white,postaction={pattern=north east lines, pattern color=forestgreen4416044}] (axis cs:7.05,0) rectangle (axis cs:7.4,21.875);
+\end{groupplot}
+
+\end{tikzpicture}

@@ -1,0 +1,216 @@
+%-------------------------------------------------------------------------------
+\section{Evaluation}
+%-------------------------------------------------------------------------------
+
+
+\subsection{Experimental Setup}
+\label{sec:expsetup}
+
+\DZ{Cut some text in this subsection if there is no space}
+\DZ{Add citations to the model and workloads.}
+
+\PN{Model and System Configuration.} 
+The experiments are conducted on a system equipped with 4 NVIDIA A10 GPUs, each with 24GB of GPU memory.
+We employ four representative models in our study: OPT-6.7B and OPT-13B, which are conventional transformer models using Multi-Head Attention~(MHA), 
+and Qwen2-7B and Yi-1.5-9B, both of which adopt Grouped-Query Attention (GQA) mechanisms.
+Due to the current implementation limitations of \flexgen, which only supports OPT models, 
+some experiments involving \flexgen are conducted exclusively on the two OPT models.
+%
+Unless otherwise specified, all experiments are conducted using chunked prefill and float16 data format.
+
+\PN{Workload.} 
+%
+\Maphsge{list a table here, like sarathi-serve}
+We evaluate our system using two representative workloads. 
+LongBench includes tasks with input lengths ranging from 8,000 to 2 million characters, covering diverse long-context scenarios. 
+Alpaca is derived from instruction-following outputs of OpenAI's text-davinci-003 engine. 
+The requests are submitted at a rate following a Poisson distribution to mimic realistic serving conditions. 
+
+\PN{Baseline.} 
+We consider three baselines in our evaluation: DeepSpeed, FlexGen, and a naive method.
+The naive method involves loading the entire model into GPU memory without any offloading using vLLM. 
+
+\PN{Key Metrics.} 
+%
+We use several key metrics to evaluate including host memory usage for memory efficiency, 
+\DZ{Add a reference to the subsection where we introduce these two metrics} 
+%
+TPOT for latency, and throughput for overall inference performance, which measures the number of tokens generated per second.
+In order to ensure experimental consistency, the TPOT SLO is set to 100 ms which is higher than the normal human read
+speed.
+
+Another critical metric is the maximum allocatable length (\textit{max length}). 
+This metric is computed as 
+\[
+\textit{max length} = \textit{batch size} \times (\textit{sequence length} + \textit{output length}),
+\]
+where the term captures the total number of tokens that the system can handle for a single model instance. 
+A higher \textit{max length} indicates the system's ability to support larger batch sizes, longer input sequences, and extended output sequences.
+
+\begin{figure*}[t]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \input{figures/evalSLO.tex} % 插入 TikZ 图
+ }
+    \caption{Comparison of TPOT under different models and workloads. }
+    \label{fig:eval1}
+\end{figure*}
+
+\subsection{Maintaining SLO}
+
+We first evaluate \sys's ability to maintain SLO with different batch sizes. 
+The results presented in Figure~\ref{fig:eval1} clearly demonstrate that \sys effectively maintains the specified SLO across different setups. 
+This is because \sys adjusts the \interval parameter according to the batch size to maintain the SLOs. 
+%
+
+In comparison, DeepSpeed fails to meet the specified SLOs, \Maphsge{Add \flexgen and naive}
+with TPOT latencies exceeding the target by a factor of 8.08x. This is because \deepspeed always keeps the minimal portion fixed on the GPU.
+\Maphsge{this reason is the same as the one in the throughput section.}
+
+
+\subsection{Throughput Comparison}
+\label{sec:memsave}
+
+We conduct experiments to evaluate and compare \sys and other baselines in terms of throughput performance under various models and input conditions. 
+Figure~\ref{fig:eval2}(a) presents the results of the throughput comparison. 
+
+\sys outperforms \deepspeed in throughput by a factor of 6.8× to 8.23×. 
+This is because, as shown in the Figure~\ref{fig:eval2}(b), under the chunked prefill mode \Maphsge{fig here is chunked under different batch sizes}, 
+the transfer time of a single decoder layer significantly exceeds its computation time. 
+Since \deepspeed incur transfer overhead at every layer, it requires substantially more time to generate the same number of tokens.
+
+\sys consistently achieves higher throughput than \flexgen and achieves up to 1.85\X the throughput of \flexgen in the best case. 
+This is because \flexgen's memory-saving capability is consistently inferior to that of \sys at the same batch size 
+due to inaccuracies in its estimation of transfer and computation latencies, 
+resulting in suboptimal offloading decisions. As shown in the Figure~\ref{fig:eval2}(c), \sys achieves 2.37\X better memory savings compared to \flexgen. 
+By saving more memory, \sys can support larger input scales, which further enhances throughput. 
+This advantage will be discussed in greater detail in Section~\S\ref{sec:benefits}.
+
+\begin{figure}[t]
+    \centering
+    \resizebox{\columnwidth}{!}{
+        \input{figures/eval2_new.tex} % 插入 TikZ 图
+ }
+    \caption{(a) (b) Memory usage on the offloading devices for \sys and FlexGen under different batch sizes. 
+ (c) (d) Throughput comparison between \sys and FlexGen under different batch sizes.}
+    \label{fig:eval2}
+\end{figure}
+
+\subsection{Benefits of \sys}
+\label{sec:benefits}
+
+\PN{Supporting larger models.}
+\Maphsge{I wonder if we still need this section because all the experiments above is based on this.}
+\sys is capable of supporting models whose memory demands exceed the GPU memory capacity, as demonstrated in experiments with OPT-13B (using float16 data format), 
+Qwen2-7B, and GLM-4-9B (both using float32 data format).
+Figure~\ref{fig:eval3} presents the TPOT performance of different models respectively, under varying batch sizes. All models, 
+which require memory beyond the 24GB GPU capacity in our setup, were successfully executed using \sys. 
+TPOT values below 100 ms are higher than the normal human reading speed, indicating that such latencies allow for efficient and real-time text generation. 
+In our experiments, the TPOT values for the three models remained consistently below 100ms across most tested batch sizes except for scenarios where the batch size 
+is set too small, demonstrating that \sys satisfies the SLO in most cases.
+This confirms that \sys not only enables the execution of these large-scale models but also ensures efficient performance suitable for real-world applications.
+
+\begin{figure}[t]
+    \centering
+    \resizebox{0.5\columnwidth}{!}{
+        \input{figures/eval3.tex} % 插入 TikZ 图
+ }
+    \caption{TPOT of different models using \sys.}
+    \label{fig:eval3}
+\end{figure}
+
+\PN{Supporting more input and output tokens.}
+In our experiments, we use the Qwen2-7B model, which support a maximum position embedding size of 32,768 tokens. 
+This choice is deliberate, 
+as this model significantly exceed the position embedding limits of OPT models and Yi-1.5 model, 
+ensuring that the system remains capable of processing long input sequences. 
+To compare with \flexgen, we calculate the corresponding offloading ratio based on the \interval values used in \sys and then manually set this ratio in \flexgen. 
+We also conducted comparisons with \deepspeed.
+
+The results in Figure~\ref{fig:eval4} show that, 
+\sys supports larger max length than others. 
+This is because reducing the GPU memory using allows \sys to allocate more GPU memory for token processing, thereby increasing the maximum allocatable length. 
+As a result, the system can support larger batch sizes, 
+longer input sequences, or extended output sequences under different interval settings, which helps to improve throughput. 
+In contrast, \flexgen consistently shows smaller max length than \sys, while \deepspeed always retains one layer in GPU HBM, 
+resulting in a constant larger value in the graph.
+
+\begin{figure}[t]
+    \centering
+    \resizebox{\columnwidth}{!}{
+        \input{figures/eval4.tex} % 插入 TikZ 图
+ }
+    \caption{Maximum prompt length the model can process under different \interval settings.
+ The dashed line represents the maximum length in the naive mode.}
+    \label{fig:eval4}
+\end{figure}
+
+
+
+\subsection{Profiling Accuracy}
+
+This subsection evaluates the effectiveness of the \interval analyzer, namely examining the optimality of the \interval value determined during the record-generating phase. 
+\Maphsge{batch size to 128. }
+Based on the optimal \interval value from the records, we conducted experiments under both the optimal and alternative \interval configurations, 
+evaluating TPOT latency and recording the corresponding GPU memory usage for each setting.
+
+The results are shown in Figure~\ref{fig:profileraccu}. 
+According to performance records, the optimal \interval values are identified as 3 for the Qwen2 and GLM-4 models and 4 for the OPT and LLaMA model. 
+The optimal \interval values achieve an effective balance by ensuring compliance with TPOT SLO while minimizing GPU memory usage. 
+When \interval is smaller than the optimal value, GPU memory usage is reduced; 
+however, this comes at the cost of SLO violations due to increased latency resulting in degraded throughput. 
+
+\Maphsge{shown in fig, larger...}
+In contrast, larger \interval values consistently satisfy the SLO but incur significant memory overhead without measurable performance gains. 
+Specially, when the model size exceeds the available GPU memory, there is a practical upper bound on the \interval setting. 
+As illustrated in the results for the OPT-13B model, which has a size of 26GB, this exceeds the 24GB GPU memory of the A10 GPU. 
+Consequently, when the \interval value surpasses 5, the model cannot be deployed due to out-of-memory (OOM) errors.
+
+\begin{figure}[t]
+    \centering
+    \resizebox{\columnwidth}{!}{
+        \input{figures/profileraccu.tex} % 插入 TikZ 图
+ }
+    \caption{The TTFT, TPOT, and memory usage of \sys under different \interval configurations. 
+ The red dashed lines represent the SLO. The optimal \interval is 3 in (a) and 8 in (b).}
+    \label{fig:profileraccu}
+\end{figure}
+
+\DZ{Missing breakdown analysis.}
+\subsection{Latency Breakdown}
+\Maphsge{Add a figure here.}
+
+To understand \sys's performance in detail, we conduct a latency breakdown analysis of its execution process. 
+Specifically, we divide the lifecycle of a single iteration in \sys into the following stages: inference execution, transfer blocking, and \interval adjustment. 
+For each stage, we accumulate the total time consumed across all requests to determine its proportion in the overall system execution time. 
+We compare \sys with other baseline systems, selecting the OPT-13B model for evaluation since it is natively supported by \flexgen. 
+
+The results of the latency breakdown are illustrated in Figure~X. 
+As shown, the primary performance bottleneck in \deepspeed lies in data transfer overhead, which accounts for X\% of the total execution time—significantly 
+higher than that in \sys. Although \flexgen exhibits slightly lower data transfer overhead compared to \sys, 
+this is largely attributed to its insufficient utilization of host memory resources. 
+On the other hand, the overhead introduced by \interval adjustment in \sys is minimal, occupying only a negligible portion of the iteration lifecycle. 
+
+\subsection{Bandwidth contention}
+
+We conduct experiments simulating a scenario where two GPUs share PCIe bandwidth. In this setup, we run inference tasks on both GPUs simultaneously, 
+measuring SLO and throughput. Specifically, we run the OPT model on FlexGen, while conducting experiments with different models on \sys. 
+
+Figure~\ref{fig:evalband}(a) shows the SLO results, where \sys consistently maintains the SLO, while FlexGen fails to do so. 
+This is because FlexGen lacks the ability to dynamically adjust the offload ratio, whereas \sys can adaptively adjust the \interval to reduce data transfers. 
+As a result, FlexGen exhibits lower throughput compared to \sys, as shown in Figure~\ref{fig:evalband}(b).
+
+
+\begin{figure}[t]
+    \centering
+    \resizebox{0.9\columnwidth}{!}{
+        \input{figures/evalbandwidth.tex} % 插入 TikZ 图
+ }
+    \caption{TPOT comparison of \sys (OPT-13B and LLaMA-13B models) and FlexGen (OPT-13B model) under contention environments across different batch sizes.
+ The dashed line represents the SLO.}
+    \label{fig:evalband}
+\end{figure}
+
+
+
+

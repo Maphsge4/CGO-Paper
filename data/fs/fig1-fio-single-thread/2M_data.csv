@@ -1,0 +1,8 @@
+read,5.7418,ext4
+read,5.7357,f2fs
+read,6.81,ufs
+read,8.633526,aeofs
+write,3.9219,ext4
+write,3.5876,f2fs
+write,3.449,ufs
+write,5.644542,aeofs

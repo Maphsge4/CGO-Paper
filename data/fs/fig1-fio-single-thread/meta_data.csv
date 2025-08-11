@@ -1,0 +1,12 @@
+open,0.970626171,ext4
+open,1.27016416,f2fs
+open,0.3047622,ufs
+open,6.486877995,aeofs
+create,0.078691456,ext4
+create,0.05114252,f2fs
+create,0.071884,ufs
+create,0.352548534,aeofs
+delete,0.135189211,ext4
+delete,0.08998,f2fs
+delete,0.1885665,ufs
+delete,0.9546237,aeofs

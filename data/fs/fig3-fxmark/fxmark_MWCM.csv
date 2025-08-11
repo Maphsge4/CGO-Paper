@@ -1,0 +1,11 @@
+thread,ext4,f2fs,ufs,sys
+1,0,0.052400245652,"defaultdict(<function nested_defaultdict.<locals>.<lambda> at 0x7faef777f880>, {})",0.3495525727068
+2,0,0.045275275941,"defaultdict(<function nested_defaultdict.<locals>.<lambda> at 0x7faef777f9c0>, {})",0.5452992177984
+4,0,0.039454730091,"defaultdict(<function nested_defaultdict.<locals>.<lambda> at 0x7faef777fa60>, {})",0.9662600769516
+8,0,0.038599763706,"defaultdict(<function nested_defaultdict.<locals>.<lambda> at 0x7faef777fb00>, {})",1.6801780988781
+16,0,0.038640162698,"defaultdict(<function nested_defaultdict.<locals>.<lambda> at 0x7faef777fba0>, {})",2.3981469318812
+24,0,0.037419636014,"defaultdict(<function nested_defaultdict.<locals>.<lambda> at 0x7faef777fc40>, {})",2.5053368895198
+32,0,0.038036827903999995,"defaultdict(<function nested_defaultdict.<locals>.<lambda> at 0x7faef777fce0>, {})",2.7225363261852
+48,0,0.036896973035,"defaultdict(<function nested_defaultdict.<locals>.<lambda> at 0x7faef777fd80>, {})",2.7280646094528
+56,0,0.036396805538,"defaultdict(<function nested_defaultdict.<locals>.<lambda> at 0x7faef777fe20>, {})",2.9035581673311
+64,0,0.03644298655,"defaultdict(<function nested_defaultdict.<locals>.<lambda> at 0x7faef777fec0>, {})",2.8755014377509
