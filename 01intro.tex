@@ -1,13 +1,17 @@
 \section{Introduction}
-This document is a model and instructions for \LaTeX.
-Please observe the conference page limits. For more information about how to become an IEEE Conference author or how to write your paper, please visit   IEEE Conference Author Center website: https://conferences.ieeeauthorcenter.ieee.org/.
+In recent years, the exponential growth of graph data scales and the widespread adoption of graph-based models have positioned graph computing accelerators 
+and system design as critical research areas attracting significant attention from both academia and industry. 
+This surge in interest reflects the fundamental role that graph processing has assumed in big data analytics, 
+where traditional computational paradigms struggle to efficiently handle the irregular data structures and complex traversal patterns inherent in graph workloads. 
+The unique characteristics of graph algorithms, including their inherently data-dependent control flow and sparse memory access patterns, 
+present substantial challenges for achieving high performance on conventional computing architectures.
 
-\subsection{Maintaining the Integrity of the Specifications}
-
-The IEEEtran class file is used to format your paper and style the text. All margins, 
-column widths, line spaces, and text fonts are prescribed; please do not 
-alter them. You may note peculiarities. For example, the head margin
-measures proportionately more than is customary. This measurement 
-and others are deliberate, using specifications that anticipate your paper 
-as one part of the entire proceedings, and not as an independent document. 
-Please do not revise any of the current designations.
+However, the runtime computational and memory access behaviors of graph computing applications on emerging computing platforms differ 
+significantly from those observed on classical processor architectures such as CPUs and GPUs. 
+While existing graph computing systems provide valuable insights and design principles, 
+they cannot be directly applied to custom hardware platforms without substantial modifications, 
+thereby limiting the ability to fully exploit the potential of specialized accelerators. 
+On the other hand, current graph computing frameworks are typically designed for specific graph domains, 
+making them inadequate for addressing the diverse and complex applications encountered in real-world scenarios. 
+These limitations underscore the urgent need for novel programming models and compilation techniques 
+that can bridge the gap between high-level graph algorithm specification and efficient execution on heterogeneous computing platforms.

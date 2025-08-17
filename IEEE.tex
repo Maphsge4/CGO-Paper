@@ -1,0 +1,90 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+% 基本包
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{xspace}
+
+% 引用包 - 只用一个
+\usepackage[square,comma,numbers,sort&compress]{natbib}
+
+% 算法包 - 只用一套
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+% TikZ 和绘图包
+\usepackage{tikz}
+\usetikzlibrary{patterns}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepgfplotslibrary{groupplots}
+
+% 表格包
+\usepackage{booktabs}
+\usepackage{array}
+
+% URL 和字符串处理
+\usepackage{url}
+\usepackage{xstring}
+\usepackage{hyperref}
+
+% 列表和字体
+\usepackage{enumitem}
+\usepackage{relsize}
+\usepackage{fancyvrb}
+
+% common packages
+\include{pkgs}
+
+% 自定义命令
+\newcommand{\sys}{\mbox{\textsc{NovaServe}}\xspace}
+\newcommand{\syss}{\mbox{\textsc{NovaServe's}}\xspace}
+
+\newcommand{\deepspeed}{DeepSpeed\xspace}
+\newcommand{\flexgen}{FlexGen\xspace}
+\newcommand{\vllm}{vLLM\xspace}
+
+\newcommand{\Interval}{Offloading interval\xspace}
+\newcommand{\interval}{offloading interval\xspace}
+\newcommand{\intervals}{offloading intervals\xspace}
+
+\newcommand{\oflayer}{offloaded layer\xspace}
+
+\newcommand{\analyzer}{analyzer\xspace}
+\newcommand{\Record}{Record\xspace}
+\newcommand{\record}{record\xspace}
+\newcommand{\records}{records\xspace}
+
+% 导入命令定义文件
+\input{cmds}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\begin{document}
+
+\title{Conference Paper Title*\\
+{\footnotesize \textsuperscript{*}Note: Sub-titles are not captured for https://ieeexplore.ieee.org  and
+should not be used}
+}
+
+
+\maketitle
+
+\input{00abstract}
+\input{01intro}
+\input{02background}
+\input{03motivation}
+\input{04design}
+% \input{05eval}
+% \input{06relwk}
+% \input{07conclusion}
+
+\nocite{*}
+\bibliographystyle{IEEEtran}
+\bibliography{p}
+
+\end{document}
